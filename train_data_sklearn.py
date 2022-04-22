@@ -3,10 +3,14 @@ import pandas as pd
 from pandas import Series,DataFrame
 import matplotlib.pyplot as plt
 #sklearn库中的普通线性模型、岭回归模型、lasso模型
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression,Ridge,Lasso
 #模型效果评估
 from sklearn.metrics import r2_score,mean_absolute_error
+from sklearn.neural_network import MLPClassifier, MLPRegressor
+from yellowbrick.regressor import ResidualsPlot
 
+from visualize import Visualizer
 
 if __name__ == '__main__':
 
@@ -21,47 +25,49 @@ if __name__ == '__main__':
 	test_X = test_X.drop('price', axis=1)
 	test_y = test_data['price']
 
+	# visualizer init
+	visualizer=Visualizer(train_X,train_y,test_X,test_y)
+
 	#线性模型
 	line = LinearRegression()
 	line.fit(train_X,train_y)
-	line_y_pre=line.predict(test_X)
-	plt.plot(test_y,label='True')
-	plt.plot(line_y_pre,label='Line')
-	plt.legend()
-	plt.show() 
-	line_score=r2_score(test_y,line_y_pre)
-	line_error=mean_absolute_error(test_y,line_y_pre)
-	print(line_score)
-	print(line_error)
-	print('\n')
+	visualizer.risidual_visualize(line,"result_pictures/Residual_linear.jpg")
 
-	#岭回归模型
-	ridge = Ridge()
-	ridge.fit(train_X,train_y)
-	ridge_y_pre=ridge.predict(test_X)
-	plt.plot(test_y,label='True')
-	plt.plot(ridge_y_pre,label='Ridge')
-	plt.legend()
-	plt.show() 
-	ridge_score=r2_score(test_y,ridge_y_pre)
-	ridge_error=mean_absolute_error(test_y,ridge_y_pre)
-	print(ridge_score)
-	print(ridge_error)
-	print('\n')
+	#随机森林模型
+	RF = RandomForestRegressor(max_depth=2, random_state=0)
+	RF.fit(train_X,train_y)
+	visualizer.risidual_visualize(RF,"result_pictures/Residual_random_forest.jpg")
 
-	#lasso模型
-	lasso = Lasso()
-	lasso.fit(train_X,train_y)
-	lasso_y_pre=lasso.predict(test_X)
-	plt.plot(test_y,label='True')
-	plt.plot(lasso_y_pre,label='Lasso')
-	plt.legend()
-	plt.show() 
-	lasso_score=r2_score(test_y,lasso_y_pre)
-	lasso_error=mean_absolute_error(test_y,lasso_y_pre)
-	print(lasso_score)
-	print(lasso_error)
-	print('\n')
+	# ann
+	clf = MLPRegressor(solver='sgd', alpha=1e-5,
+                    hidden_layer_sizes=(15,15,15), random_state=1,max_iter=500)
+	clf.fit(train_X,train_y)
+	visualizer.risidual_visualize(clf,"result_pictures/Residual_ann.jpg")
+
+	# rf_y_pre=RF.predict(test_X)
+	# plt.plot(test_y,label='True')
+	# plt.plot(ridge_y_pre,label='Ridge')
+	# plt.legend()
+	# plt.show()
+	# ridge_score=r2_score(test_y,ridge_y_pre)
+	# ridge_error=mean_absolute_error(test_y,ridge_y_pre)
+	# print(ridge_score)
+	# print(ridge_error)
+	# print('\n')
+	#
+	# #lasso模型
+	# lasso = Lasso()
+	# lasso.fit(train_X,train_y)
+	# lasso_y_pre=lasso.predict(test_X)
+	# plt.plot(test_y,label='True')
+	# plt.plot(lasso_y_pre,label='Lasso')
+	# plt.legend()
+	# plt.show()
+	# lasso_score=r2_score(test_y,lasso_y_pre)
+	# lasso_error=mean_absolute_error(test_y,lasso_y_pre)
+	# print(lasso_score)
+	# print(lasso_error)
+	# print('\n')
 
 
 ''' n
