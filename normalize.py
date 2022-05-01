@@ -7,9 +7,8 @@ from sklearn import preprocessing
 
 if __name__ == '__main__':
 
-    data = pd.read_csv('data_r.csv')
+    data = pd.read_csv('./data/data_r.csv')
 
-    #待归一化的属性
     numeric_attrs = ['average','coordinate_x',
             	        'coordinate_y', 'decoration_condition','deed',
             	        'elevator', 'facility0', 'facility1', 'facility2',
@@ -22,4 +21,4 @@ if __name__ == '__main__':
         scaler = preprocessing.StandardScaler()
         data[i] = scaler.fit_transform(data[i].as_matrix().reshape(-1, 1))
 
-    data.to_csv('data_n.csv',index=False)
+    data.to_csv('./data/data_n.csv',index=False)
