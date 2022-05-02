@@ -6,7 +6,7 @@ import stats as sts
 
 list = [1,4,8,90,98,44,35,56,2,41,11,24,23,45,500, 150]
 print(list)
-data = np.loadtxt("C:\\Users\\ryan_\\PycharmProjects\\House-price-prediction\\process&module\\data_c.csv",delimiter=',',skiprows=1)
+data = np.loadtxt("data/data_c.csv",delimiter=',',skiprows=1)
 def outlier_detect(num,array_candidate):
     q1 = sts.quantile(array_candidate,p=0.25)
     q3 = sts.quantile(array_candidate,p=0.75)
