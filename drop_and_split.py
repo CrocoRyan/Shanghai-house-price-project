@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 
 
-#数据集划分，训练集和测试集，大致各占80%和20%
 from sklearn.model_selection import train_test_split
 
 
@@ -38,8 +37,7 @@ if __name__ == '__main__':
 
 	X = pd.concat([tmp, right_dummies], axis=1)
 
-	# X = pd.read_csv('./data/data_n.csv')
-	# y=pd.read_csv('./data/labels.csv')
+
 
 	X_train, X_test, y_train, y_test=train_test_split(X,y,test_size=0.2,random_state=42)
 	X_train.to_csv('./data/train_feat.csv',index=False)
