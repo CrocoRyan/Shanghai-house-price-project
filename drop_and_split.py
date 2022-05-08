@@ -28,7 +28,7 @@ if __name__ == '__main__':
 					 'facility3', 'facility4', 'facility5', 'level',
 					 'total', 'framework',
 					 'ownership', 'apt', 'lift', 'district',
-					 'rights', 'scale', 'bath', 'room',
+					 'scale', 'bath', 'room',
 					 'saloon']
 	y=data['price']
 	tmp = data[numeric_attrs]
